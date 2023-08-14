@@ -1,13 +1,11 @@
-/* Navbar */
 .navbar-container {
-    background-color: rgb(255, 255, 255);
+    background-color: #f8f8f8;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
   }
   
-  /* Center the navigation links horizontally */
   .navbar-links {
     display: flex;
     justify-content: center;
@@ -19,8 +17,8 @@
   
   .navbar-link {
     margin: 0 15px;
-    color: #333; /* Adjust the color as needed */
-    font-size: 20px; /* Adjust the font size as needed */
+    color: #333;
+    font-size: 20px;
     text-decoration: none;
     transition: color 0.3s;
   }

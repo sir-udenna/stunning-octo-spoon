@@ -9,7 +9,6 @@ const About = () => {
         <h2 className="section-title">About Me</h2>
         <div className="about-content">
           <div className="about-text">
-            <p>Hello there, I'm Udenna Nebeolisa, a dedicated Full-Stack Software Engineer with a knack for transforming ideas into dynamic digital solutions.</p>
             <h3>My Journey</h3>
             <p>My coding journey took root in the creative landscapes of Roblox, where lines of code came together to craft immersive experiences. This early spark fueled my commitment to become a software engineer. Through a transformative 15-week immersive course at Flatiron School, I honed my skills and took a giant leap into the world of full-stack development.</p>
             <h3>Passion and Innovation</h3>
@@ -23,7 +22,7 @@ const About = () => {
             </p>
           </div>
           <div className="about-image">
-          <img src={profileImage} alt="Udenna Nebeolisa" />
+            <img src={profileImage} alt="Udenna Nebeolisa" />
           </div>
         </div>
       </div>

@@ -1,28 +1,54 @@
 .contact-section {
-    background-color: #f8f8f8;
-    padding: 80px 0;
+  background-color: #ffffff;
+  padding: 80px 0;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.contact-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.contact-detail,
+.contact-link {
+  font-size: 18px;
+  color: #555;
+  margin: 0;
+}
+
+.contact-link a {
+  font-size: 18px;
+  color: #777;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.contact-link a:hover {
+  color: rgb(21, 21, 177);
+}
+
+/* Additional styles to match the theme */
+.contact-detail {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+  /* For larger screens (e.g., tablets and desktops) */
+  .contact-detail {
+    font-size: 32px;
   }
-  
-  .contact-heading {
-    font-size: 28px;
-    color: #333;
-    margin-bottom: 30px;
-  }
-  
-  .contact-info {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  
-  .contact-icon {
-    font-size: 24px;
-    color: #ff9800;
-    margin-right: 10px;
-  }
-  
-  .contact-details {
-    font-size: 18px;
-    color: #777;
-  }
-  
+}
