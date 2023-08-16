@@ -1,16 +1,29 @@
 import React from 'react';
-import data from '../data'; 
-import './Projects.css'
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import data from '../data';
+import './Projects.css';
 
 const Projects = () => {
   return (
     <section id="projects" className="projects-section">
       <div className="projects-container">
-        <h2 className="section-title">Projects</h2>
-        <div className="projects-list">
+        <h2 className="section-title">Featured Projects</h2>
+        <Carousel
+          showArrows={true}
+          showThumbs={false}
+          showStatus={false}
+          autoPlay={true}
+          interval={5000}
+        >
           {data.projects.map((project, index) => (
-            <div className="project-card" key={index}>
+            <div className={`project-card ${project.video ? '' : 'centered'}`} key={index}>
               <h3 className="project-title">{project.name}</h3>
+              <div className="project-image">
+                {project.image && (
+                  <img src={project.image} alt={project.name} />
+                )}
+              </div>
               <p className="project-description">{project.description}</p>
               <div className="project-links">
                 {project.video && (
@@ -20,7 +33,7 @@ const Projects = () => {
               </div>
             </div>
           ))}
-        </div>
+        </Carousel>
       </div>
     </section>
   );

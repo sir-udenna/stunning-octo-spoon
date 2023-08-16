@@ -4,6 +4,7 @@
     top: 0;
     width: 100%;
     z-index: 1000;
+    
   }
   
   .navbar-links {
@@ -24,6 +25,6 @@
   }
   
   .navbar-link:hover {
-    color: #d6cab8;
+    color: rgb(21, 21, 177);
   }
   

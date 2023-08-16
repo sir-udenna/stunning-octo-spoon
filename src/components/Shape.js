@@ -1,64 +1,82 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import binaryTextureUrl from '../assets/back.jpg';
 
 const Shape = () => {
-    const containerRef = useRef();
+  const containerRef = useRef();
+  let camera, scene, renderer;
+  const characters = [];
 
-    useEffect(() => {
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(
-            25,
-            window.innerWidth / window.innerHeight,
-            0.1,
-            1000
-        );
-        camera.position.z = 5;
+  const updateRendererSize = () => {
+    const width = containerRef.current.clientWidth;
+    const height = containerRef.current.clientHeight;
+    renderer.setSize(width, height);
+  };
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0x808080, 0.1);
-        containerRef.current.appendChild(renderer.domElement);
+  useEffect(() => {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    camera.position.z = 5;
 
-        // Add ambient light
-        const ambientLight = new THREE.AmbientLight(0xffffff, 30);
-        scene.add(ambientLight);
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    updateRendererSize();
+    renderer.setClearColor(0x000000, 0);
+    containerRef.current.appendChild(renderer.domElement);
 
-        // Add directional light
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
-        directionalLight.position.set(1, 1, 1);
-        scene.add(directionalLight);
+    // Create binary code material
+    const binaryTexture = new THREE.TextureLoader().load(binaryTextureUrl);
+    const binaryMaterial = new THREE.SpriteMaterial({ map: binaryTexture });
 
+    // Create binary code characters
+    const numCharacters = 1000;
+    for (let i = 0; i < numCharacters; i++) {
+      const character = new THREE.Sprite(binaryMaterial);
+      const x = Math.random() * 10 - 5; // Random x position
+      const y = Math.random() * 10 - 5; // Random y position
+      const z = Math.random() * 10 - 5; // Random z position
+      character.position.set(x, y, z);
+      character.scale.set(0.05, 0.05, 1); // Scale down the character
+      characters.push(character);
+      scene.add(character);
+    }
 
-        // Create a rotating square while i think of what might make this look more interesting
-        const squareGeometry = new THREE.BoxGeometry(1, 1, 1);
-        const squareMaterial = new THREE.MeshStandardMaterial({ color: 0xf8f8f8 }); // Grey color
-        const square = new THREE.Mesh(squareGeometry, squareMaterial);
-        scene.add(square);
+    animate();
 
-        const animate = () => {
-            requestAnimationFrame(animate);
-            square.rotation.x += 0.001;
-            square.rotation.y += 0.01;
-            renderer.render(scene, camera);
-        };
+    const onWindowResize = () => {
+      updateRendererSize();
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
 
-        animate();
+    window.addEventListener('resize', onWindowResize);
 
-        const onWindowResize = () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        };
+    return () => {
+      window.removeEventListener('resize', onWindowResize);
+      containerRef.current.removeChild(renderer.domElement);
+    };
+  }, []);
 
-        window.addEventListener('resize', onWindowResize);
+  const animate = () => {
+    requestAnimationFrame(animate);
 
-        return () => {
-            window.removeEventListener('resize', onWindowResize);
-            containerRef.current.removeChild(renderer.domElement);
-        };
-    }, []);
+    // Update binary code positions
+    characters.forEach(character => {
+      character.position.y -= 0.01; // Move down
+      if (character.position.y < -5) {
+        character.position.y = 5; // Reset position
+      }
+    });
 
-    return <div ref={containerRef} />;
+    renderer.render(scene, camera);
+  };
+
+  return <div ref={containerRef} style={{ width: '100%', height: '100vh' }} />;
 };
 
 export default Shape;
