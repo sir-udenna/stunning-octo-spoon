@@ -28,3 +28,31 @@
     height: auto; /* Allow content to determine the height */
   }
 }
+
+.binary-animation-container {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden; /* Hide overflowing binary code */
+  position: relative;
+}
+
+/* Styling for the binary code animation */
+.binary-animation-container canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Additional styles to make the binary animation more centered on mobile */
+@media (max-width: 768px) {
+  .binary-animation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .binary-animation-container canvas {
+    width: 100%;
+    height: auto;
+  }
+}

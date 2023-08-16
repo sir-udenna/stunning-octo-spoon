@@ -1,71 +1,57 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import binaryTextureUrl from '../assets/back.jpg';
 
 const Shape = () => {
   const containerRef = useRef();
-  const squares = [];
+  let camera, scene, renderer;
+  const characters = [];
+
+  const updateRendererSize = () => {
+    const width = containerRef.current.clientWidth;
+    const height = containerRef.current.clientHeight;
+    renderer.setSize(width, height);
+  };
 
   useEffect(() => {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75, // Wider field of view for mobile
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(
+      75,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
     camera.position.z = 5;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0); // Set clear color to transparent
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    updateRendererSize();
+    renderer.setClearColor(0x000000, 0);
     containerRef.current.appendChild(renderer.domElement);
 
-    // Create multiple rotating squares with wormhole effect
-    const numSquares = 10;
-    for (let i = 0; i < numSquares; i++) {
-      const radius = 1 + i * 0.5; // Increase radius with each layer
-      const opacity = 0.5 - i * 0.04;
+    // Create binary code material
+    const binaryTexture = new THREE.TextureLoader().load(binaryTextureUrl);
+    const binaryMaterial = new THREE.SpriteMaterial({ map: binaryTexture });
 
-      const squareGeometry = new THREE.TorusGeometry(radius, 0.2, 16, 100);
-      const squareMaterial = new THREE.MeshBasicMaterial({
-        color: 0x00ff00, // Green color
-        transparent: true,
-        opacity: opacity,
-      });
-      const square = new THREE.Mesh(squareGeometry, squareMaterial);
-      scene.add(square);
-      squares.push({ square });
+    // Create binary code characters
+    const numCharacters = 1000;
+    for (let i = 0; i < numCharacters; i++) {
+      const character = new THREE.Sprite(binaryMaterial);
+      const x = Math.random() * 10 - 5; // Random x position
+      const y = Math.random() * 10 - 5; // Random y position
+      const z = Math.random() * 10 - 5; // Random z position
+      character.position.set(x, y, z);
+      character.scale.set(0.05, 0.05, 1); // Scale down the character
+      characters.push(character);
+      scene.add(character);
     }
-
-    let time = 0; // Initialize time
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      time += 0.020; // Increase time to control animation speed
-      
-      for (let i = 0; i < squares.length; i++) {
-        const { square } = squares[i];
-        const sineTime = Math.sin(time + i * 0.5); // Adjust frequency
-        const scaleFactor = 1 + 0.1 * sineTime; // Adjust amplitude
-        square.scale.set(scaleFactor, scaleFactor, scaleFactor);
-
-        // Rotate the square
-        square.rotation.x += 0.005;
-        square.rotation.y += 0.01;
-      }
-
-      renderer.render(scene, camera);
-    };
 
     animate();
 
     const onWindowResize = () => {
-      const newWidth = window.innerWidth;
-      const newHeight = window.innerHeight;
-
-      camera.aspect = newWidth / newHeight;
+      updateRendererSize();
+      camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(newWidth, newHeight);
+      renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
     window.addEventListener('resize', onWindowResize);
@@ -75,6 +61,20 @@ const Shape = () => {
       containerRef.current.removeChild(renderer.domElement);
     };
   }, []);
+
+  const animate = () => {
+    requestAnimationFrame(animate);
+
+    // Update binary code positions
+    characters.forEach(character => {
+      character.position.y -= 0.01; // Move down
+      if (character.position.y < -5) {
+        character.position.y = 5; // Reset position
+      }
+    });
+
+    renderer.render(scene, camera);
+  };
 
   return <div ref={containerRef} style={{ width: '100%', height: '100vh' }} />;
 };

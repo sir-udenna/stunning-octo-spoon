@@ -8,13 +8,14 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  color: #333; /* Set a text color that contrasts well with the background */
 }
 
 .section-title {
   font-size: 36px;
   margin-bottom: 30px;
   font-family: 'ASIX-FOUNDER', sans-serif;
+  color: rgb(0, 0, 0);
+
 }
 
 .about-content {
