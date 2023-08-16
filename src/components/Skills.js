@@ -10,7 +10,6 @@ const Skills = () => {
       <div className="container">
         <h2 className="section-title">Technical Skills</h2>
         <div className="skills-list">
-          <ul>
             {data.skills.map((skillType, index) => (
               <div key={index}>
                 <h3 className="skill-type">{skillType.type}</h3>
@@ -21,7 +20,6 @@ const Skills = () => {
                 </ul>
               </div>
             ))}
-          </ul>
         </div>
       </div>
     </section>
@@ -29,3 +27,5 @@ const Skills = () => {
 }
 
 export default Skills;
+
+//Grid not supproted in outer ul

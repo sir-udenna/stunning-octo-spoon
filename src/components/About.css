@@ -1,31 +1,34 @@
-.about-container {
-  margin: 0 auto;
-  padding: 20px;
-}
-
 /* About Section */
 .about-section {
   background-color: #f8f8f8;
-  padding: 0px 0;
+  padding: 0;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #333; /* Set a text color that contrasts well with the background */
 }
 
 .section-title {
   font-size: 36px;
   margin-bottom: 30px;
+  font-family: 'ASIX-FOUNDER', sans-serif;
 }
 
 .about-content {
+  margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap-reverse;
+  flex-wrap: wrap;
 }
 
 .about-text {
   flex: 1;
-  text-align: left;
-  padding-right: 30px;
+  text-align: center;
+  padding: 0 30px;
 }
 
 .about-text h3 {
@@ -46,14 +49,14 @@
 .about-image img {
   max-width: 180px;
   height: auto;
-  border-radius: 50%;
+  /* border-radius: 20%; */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  transition: transform 0.3s ease-in-out; /* smooth transition effect */
+  transition: transform 0.3s ease-in-out;
 }
 
 .about-image img:hover {
-  transform: scale(1.05); /* Enlarge the image on hover */
+  transform: scale(1.05);
 }
 
 .connect-links a {
@@ -72,7 +75,7 @@
   }
 
   .about-text {
-    padding-right: 0;
+    padding: 0;
     margin-bottom: 30px;
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import './Hero.css';
-import Shape from './Shape';
+// import Shape from './Shape';
 
 const Hero = () => {
   return (
@@ -10,7 +10,7 @@ const Hero = () => {
         <p className="hero-subtitle">Full-Stack Software Engineer | Passionate about Innovation | Lifelong Learner</p>
       </div>
       <div className="shape-container">
-        <Shape />
+        {/* <Shape /> */}
       </div>
     </section>
   );
